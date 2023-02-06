@@ -8,13 +8,13 @@ namespace ERPTestingCSharpSelenium;
 public class E2EDeleteUserTest : Base
 {
     // run smoke test from terminal
-    // dotnet test ERPTestingCSharpSelenium.csproj --filter TestCategory=Smoke 
+    // dotnet test ERPTestingCSharpSelenium.csproj --filter TestCategory=Smoke
 
     [Test, Category("Smoke")]
-    // add test data
-    [TestCase("Mark Zenn", "Joe Root", "Joe", "@Barry-Hill1", "Strongest")]
+    // dynamic test data
+    [TestCaseSource("AddDeleteTestDataConfig")]
 
-    public void DeleteUser(string userName, string adminName,string adminFirstName, string userPassword, string passwordStrengths)
+    public void DeleteUser(string userName, string adminName,string adminFirstName)
 
     {
         // Filter urers by role and status
@@ -25,6 +25,12 @@ public class E2EDeleteUserTest : Base
         // Assertion
         Assert.That(userPage.getPopUpMessage(), Is.True);
         if (userPage.getPopUpMessage()) Console.WriteLine($"User {userName} was successfully deleted");
+    }
+
+    public static IEnumerable<TestCaseData> AddDeleteTestDataConfig()
+    {
+        // add multi data sets manualy or from database
+        yield return new TestCaseData(getDataParser().extractData("userName"), getDataParser().extractData("adminName"), getDataParser().extractData("adminFirstName"));
     }
 
 }

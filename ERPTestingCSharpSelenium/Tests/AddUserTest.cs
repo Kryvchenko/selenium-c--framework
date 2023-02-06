@@ -13,6 +13,7 @@ public class E2EAddUserTest : Base
     // dotnet test ERPTestingCSharpSelenium.csproj --filter TestCategory=Smoke
     
     [Test, Category("Critical-Path")]
+    // dynamic test data
     [TestCaseSource("AddTestDataConfig")]
 
     public void AddNewUser(string userName, string adminName, string adminFirstName, string userPassword, string passwordStrengths)
@@ -32,9 +33,9 @@ public class E2EAddUserTest : Base
 
     public static IEnumerable<TestCaseData> AddTestDataConfig()
     {
-        // add multi data sets manualy or from database
-        yield return new TestCaseData("Mark Zenn", "Joe Root", "Joe", "@Barry-Hill1", "Strongest");
-        yield return new TestCaseData(getDataParser().extractData("userName"), getDataParser().extractData("adminName"), getDataParser().extractData("adminFirstName"), getDataParser().extractData("userPassword"), getDataParser().extractData("passwordStrengths"));   
+        // multi data sets from database
+        yield return new TestCaseData(getDataParser().extractData("userName"), getDataParser().extractData("adminName"), getDataParser().extractData("adminFirstName"), getDataParser().extractData("userPassword"), getDataParser().extractData("passwordStrengths"));
+        //yield return new TestCaseData(getDataParser().extractData("userName"), getDataParser().extractData("adminName"), getDataParser().extractData("adminFirstName"), getDataParser().extractData("userPassword"), getDataParser().extractData("passwordStrengths"));   
     }
 
 }
